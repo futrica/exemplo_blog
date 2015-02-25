@@ -1,0 +1,21 @@
+<% wrap_layout :layout do %>
+  <article class="post">
+    <h1><%= current_article.title %></h1>
+    <p> 
+      <!-- mostra o author post-->
+      <%= current_article.data.author %> - 
+      <!-- mostra a data de criação do post-->
+      <%= current_article.date.strftime('%e/%m/%Y') %>
+      <br />
+      <!-- mostra as tags -->
+      <% current_article.tags.each do |tag| %>
+        <a href="/tags/<%= tag.downcase %>.html">  <%= tag %></a>
+      <% end %>   
+    </p>
+    <hr>
+    <p>
+    <!-- renderiza o conteúdo  -->
+      <%= yield %>
+    </p>
+  </article>
+<% end %>

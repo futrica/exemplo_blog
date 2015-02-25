@@ -1,9 +1,12 @@
 ---
 pageable: true
-per_page: 12
+per_page: 10
 ---
-<h1>Articles tagged '<%= tagname %>'</h1>
+<h1> Posts com a tag: '<%= tagname %>'</h1>
 
+<!-- 
+  links de paginação que ativamos no config.rb
+-->
 <% if paginate && num_pages > 1 %>
   <p>Page <%= page_number %> of <%= num_pages %></p>
 
@@ -12,14 +15,36 @@ per_page: 12
   <% end %>
 <% end %>
 
-<ul>
-  <% page_articles.each_with_index do |article, i| %>
-    <li><%= link_to article.title, article %> <span><%= article.date.strftime('%b %e') %></span></li>
-  <% end %>
-</ul>
+<% page_articles.each_with_index do |article, i| %>
+  <article>
+    <!-- link para acessar o post-->
+    <h2> <%= link_to article.title, article %></h2> 
+      <p>
+    <!-- mostra a data de criação do post-->
+        <%= article.date.strftime('%e/%m/%Y') %> - 
+    <!-- mostra o author post-->
+        <%= article.data.author %>
+      </p>
+      <p>
+    <!-- mostra resumo do post -->
+        <%= article.summary %>
+      </p>
+      <p>
+    <!-- mostra as tags -->
+        <% article.tags.each do |tag| %>
+          <a href="/tags/<%= tag.downcase %>.html">  <%= tag %></a>
+        <% end %>  
+      </p>
+      <hr>
+  </article>
+<% end %>
 
+<!-- 
+  links de paginação que ativamos no config.rb
+-->
 <% if paginate %>
   <% if next_page %>
     <p><%= link_to 'Next page', next_page %></p>
   <% end %>
 <% end %>
+
